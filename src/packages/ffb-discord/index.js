@@ -108,7 +108,7 @@ client
 	});
 
 client.setProvider(
-	sqlite.open(path.join(__dirname, 'database.sqlite3')).then(db => new commando.SQLiteProvider(db))
+	sqlite.open('/persist/database.sqlite3').then(db => new commando.SQLiteProvider(db))
 );
 
 client.registry

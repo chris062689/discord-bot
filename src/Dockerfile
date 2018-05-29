@@ -11,4 +11,7 @@ RUN yarn install && \
 
 USER app
 
+RUN mkdir /persist && chown app:app /persist/ && \
+    mkdir /persist/logs/ && chown app:app /persist/logs/
+
 ENTRYPOINT ["node", "./packages/ffb-discord/index.js"] 
