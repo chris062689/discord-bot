@@ -9,7 +9,7 @@ exports.dictionary = {
         'closed',
         'open'
     ],
-    sexuality: [
+    orientation: [
         'straight',
         'bisexual',
         'gay'

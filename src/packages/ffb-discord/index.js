@@ -38,7 +38,7 @@ async function generateRoles(guild, dictionary, role) {
 async function initalizeGuild(guild) {
 	await generateRoles(guild, ffb.dictionary.access, 'access')
 	await generateRoles(guild, ffb.dictionary.relationship, 'relationship')
-	await generateRoles(guild, ffb.dictionary.sexuality, 'sexuality')
+	await generateRoles(guild, ffb.dictionary.orientation, 'orientation')
 	await generateRoles(guild, ffb.dictionary.gender, 'gender')
 	await generateRoles(guild, ffb.dictionary.location, 'location')
 
