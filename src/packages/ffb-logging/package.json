@@ -1,0 +1,8 @@
+{
+  "name": "ffb-logging",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "winston": "^2.4.2"
+  }
+}

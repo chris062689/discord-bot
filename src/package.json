@@ -1,0 +1,18 @@
+{
+    "private": true,
+    "license": "AGPL",
+    "name": "discord-bot",
+    "author": "flamesage",
+    "scripts": {
+        "test": "xo && ava"
+	},
+    "xo": {},
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+        "ava": "^0.25.0",
+        "xo": "^0.21.0",
+		"oao": "^1.5.1"
+	}
+}
