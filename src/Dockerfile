@@ -1,5 +1,5 @@
 # Bootstrap dependencies.
-FROM ubuntu:latest
+FROM node:alpine
 WORKDIR /usr/src/app
 
 COPY . .
