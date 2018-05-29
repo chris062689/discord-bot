@@ -1,13 +1,13 @@
 # Bootstrap dependencies.
-FROM node:alpine
+FROM node:latest
 WORKDIR /usr/src/app
 
 COPY . .
 
 # Create runtime user.
 RUN yarn install && \
-    addgroup -S app -g 30000 && \
-    adduser -S -g app -u 30000 app
+    groupadd --gid 30000 app && \
+    useradd -m -u 30000 -g 30000 app
 
 USER app
 
