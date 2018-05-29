@@ -5,21 +5,21 @@ const commando = require('discord.js-commando');
 module.exports = class UserInfoCommand extends commando.Command {
 	constructor(client) {
 		super(client, {
-			name: 'setsexuality',
+			name: 'setorientation',
 			group: 'core',
-			memberName: 'setsexuality',
-			description: 'Sets your sexuality.',
-			examples: ffb.dictionary.sexuality.forEach(x => `setsexuality ${x}`),
+			memberName: 'setorientation',
+			description: 'Sets your orientation.',
+			examples: ffb.dictionary.orientation.forEach(x => `setorientation ${x}`),
 			guildOnly: true,
 			args: [
 				{
-					key: 'sexuality',
-					label: 'Sexuality',
-					prompt: 'What is your sexuality?',
+					key: 'orientation',
+					label: 'orientation',
+					prompt: 'What is your orientation?',
 					type: 'string',
 					validate: text => {
-						if (ffb.dictionary.sexuality.includes(text)) return true
-						else return "Please enter a valid sexuality."
+						if (ffb.dictionary.orientation.includes(text)) return true
+						else return "Please enter a valid orientation."
 					}
 				}
 			]
@@ -27,15 +27,15 @@ module.exports = class UserInfoCommand extends commando.Command {
 	}
 
 	async run(message, args) {
-		const sexuality = args.sexuality
+		const orientation = args.orientation
 		const user = message.member
 
-		logger.info(`${user.displayName} set their sexuality as ${sexuality}.`, { user: user.id, sexuality: sexuality })
+		logger.info(`${user.displayName} set their orientation as ${orientation}.`, { user: user.id, orientation: orientation })
 
-		for (var status in ffb.roles.sexuality)
-			await user.removeRole(ffb.roles.sexuality[sexuality])
+		for (var status in ffb.roles.orientation)
+			await user.removeRole(ffb.roles.orientation[orientation])
 		
-        await user.addRole(ffb.roles.sexuality[sexuality])
-		return message.reply(`Your sexuality has been updated to '${sexuality}'`)
+        await user.addRole(ffb.roles.orientation[orientation])
+		return message.reply(`Your orientation has been updated to '${orientation}'`)
 	}
 };
