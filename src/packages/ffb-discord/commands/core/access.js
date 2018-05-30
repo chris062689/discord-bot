@@ -52,7 +52,5 @@ module.exports = class UserInfoCommand extends commando.Command {
 			await user.removeRole(ffb.roles.access[group])
 			await message.reply(`You no longer have access to the ${group} channel group.`)
 		}
-		
-		return message.delete()
 	}
 };

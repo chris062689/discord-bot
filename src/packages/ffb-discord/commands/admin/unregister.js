@@ -29,10 +29,10 @@ module.exports = class UserInfoCommand extends commando.Command {
         logger.info(`${senderUser.displayName} unregistered ${user.displayName}.`, { sender: senderUser.id, user: user.id })
         
         for (var x in user.roles)
-            await user.removeRole(user.roles[x])
+			await user.removeRole(user.roles[x])
+		
         await user.addRole(ffb.roles.unregistered)
         
-        await message.reply("User has been unregistered.")
-		return message.delete()
+        return message.reply("User has been unregistered.")
 	}
 };

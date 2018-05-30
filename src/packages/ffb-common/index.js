@@ -12,7 +12,8 @@ exports.dictionary = {
     orientation: [
         'straight',
         'bisexual',
-        'gay'
+        'gay',
+        'pansexual'
     ],
     gender: [
         'male',

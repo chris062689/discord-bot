@@ -15,10 +15,10 @@ module.exports = class UserInfoCommand extends commando.Command {
 				{
 					key: 'location',
 					label: 'location',
-					prompt: `What is your location? (${ffb.dictionary.location})`,
+					prompt: `What is your location? <http://www.floridacountiesmap.com/counties_list.shtml> (${ffb.dictionary.location})`,
 					type: 'string',
 					validate: text => {
-						if (ffb.dictionary.location.includes(text)) return true
+						if (ffb.dictionary.location.includes(text.toLowerCase())) return true
 						else return "Please enter a valid location."
 					}
 				}
@@ -39,7 +39,7 @@ module.exports = class UserInfoCommand extends commando.Command {
 	}
 
 	async run(message, args) {
-		const location = args.location
+		const location = args.location.toLowerCase()
 		const user = message.member
 		
 		if (message.member.roles.has(ffb.roles.location[location])) {
