@@ -26,6 +26,18 @@ module.exports = class UserInfoCommand extends commando.Command {
 		});
 	}
 
+	hasPermission(message) {
+		if(!message.guild) return "This command must be ran on a guild.";
+
+		if (message.member.roles.has(ffb.roles.unregistered))
+			return "Please set up your profile before running commands."
+		
+		if (message.member.roles.has(ffb.roles.over18) == false)
+			return "You are underage and cannot set your location."
+
+		return true
+	}
+
 	async run(message, args) {
 		const location = args.location
 		const user = message.member

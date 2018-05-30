@@ -15,10 +15,10 @@ module.exports = class UserInfoCommand extends commando.Command {
 				{
 					key: 'group',
 					label: 'Channel Group',
-					prompt: 'What channel group do you want to toggle?',
+					prompt: 'What channel group access do you want to toggle?',
 					type: 'string',
 					validate: text => {
-						if (ffb.dictionary.access.includes(text)) return true
+						if (ffb.dictionary.access.includes(text.toLowerCase())) return true
 						else return "Please enter a valid channel group."
 					}
 				}
@@ -27,22 +27,29 @@ module.exports = class UserInfoCommand extends commando.Command {
     }
     
 	hasPermission(message) {
-		if(!message.guild) return this.client.isOwner(message.author);
+		if(!message.guild) return "This command must be ran on a guild.";
 
-		if (message.member.roles.has(ffb.roles.over18)) return true
-		else return "You are underage and cannot access that channel."
+		if (message.member.roles.has(ffb.roles.unregistered))
+			return "Please set up your profile before running commands."
+		
+		if (message.member.roles.has(ffb.roles.over18) == false)
+			return "You are underage and cannot access that channel."
+		
+		return true
 	}
 
 	async run(message, args) {
-        const group = args.group
+        const group = args.group.toLowerCase()
         const enabled = !message.member.roles.has(ffb.roles.access[group])
 		const user = message.member
 
 		logger.info(`${user.displayName} updated access to '${group}' to ${enabled}.`, { user: user.id, group: group, enabled: enabled })
 
 		if (enabled)
-			return await user.addRole(ffb.roles.access[group])
+			await user.addRole(ffb.roles.access[group])
 		else
-            return await user.removeRole(ffb.roles.access[group])
+			await user.removeRole(ffb.roles.access[group])
+		
+		return message.delete()
 	}
 };

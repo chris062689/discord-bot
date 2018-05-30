@@ -6,7 +6,7 @@ module.exports = class UserInfoCommand extends commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'reset',
-			group: 'core',
+			group: 'admin',
 			memberName: 'reset',
 			description: '*DANGER* Wipes the server clean.',
             guildOnly: true,

@@ -113,6 +113,7 @@ client.setProvider(
 
 client.registry
 	.registerGroup('core', 'Core Commands')
+	.registerGroup('admin', 'Administrator Commands')
 	.registerDefaults()
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
