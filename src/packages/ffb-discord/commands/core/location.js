@@ -5,17 +5,17 @@ const commando = require('discord.js-commando');
 module.exports = class UserInfoCommand extends commando.Command {
 	constructor(client) {
 		super(client, {
-			name: 'setlocation',
+			name: 'location',
 			group: 'core',
-			memberName: 'setlocation',
+			memberName: 'location',
 			description: 'Sets your location.',
-			examples: ffb.dictionary.location.forEach(x => `setlocation ${x}`),
+			examples: ffb.dictionary.location.forEach(x => `location ${x}`),
 			guildOnly: true,
 			args: [
 				{
 					key: 'location',
 					label: 'location',
-					prompt: 'What is your location?',
+					prompt: `What is your location? (${ffb.dictionary.location})`,
 					type: 'string',
 					validate: text => {
 						if (ffb.dictionary.location.includes(text)) return true

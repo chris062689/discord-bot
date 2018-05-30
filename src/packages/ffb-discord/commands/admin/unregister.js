@@ -24,7 +24,7 @@ module.exports = class UserInfoCommand extends commando.Command {
 
 	async run(message, args) {
         const senderUser = message.member
-        const user = args.member
+        const user = args.user
 
         logger.info(`${senderUser.displayName} unregistered ${user.displayName}.`, { sender: senderUser.id, user: user.id })
         

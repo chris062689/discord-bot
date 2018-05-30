@@ -44,20 +44,32 @@ exports.categories = {
 }
 
 exports.logMessage = (message) => {
-    return {
-        id: message.id,
-        content: message.content,
-        author: {
-            id: message.author.id,
-            username: message.author.username
-        },
-        channel: {
-            id: message.channel.id,
-            name: message.channel.name
-        },
-        guild: {
-            id: message.guild.id,
-            name: message.guild.name
+    if (message && message.guild && message.channel)
+        return {
+            id: message.id,
+            content: message.content,
+            author: {
+                id: message.author.id,
+                username: message.author.username
+            },
+            channel: {
+                id: message.channel.id,
+                name: message.channel.name
+            },
+            guild: {
+                id: message.guild.id,
+                name: message.guild.name
+            }
         }
-    }
+    else if (message)
+        return {
+            id: message.id,
+            content: message.content,
+            author: {
+                id: message.author.id,
+                username: message.author.username
+            }
+        }
+    else
+        return null
 }

@@ -2,10 +2,6 @@ const logger = require('ffb-logging')
 const ffb = require('ffb-common')
 const commando = require('discord.js-commando');
 
-function prompt(message, dictionary) {
-    return `${message} (${dictionary})`
-}
-
 module.exports = class UserInfoCommand extends commando.Command {
 	constructor(client) {
 		super(client, {
@@ -22,8 +18,8 @@ module.exports = class UserInfoCommand extends commando.Command {
                 {
                     key: 'gender',
                     label: 'Gender',
-                    prompt: prompt('What is your gender?', ffb.dictionary.gender),
-                    type: string,
+                    prompt: `What is your gender? (${ffb.dictionary.gender})`,
+                    type: 'string',
                     validate: text => {
 						if (ffb.dictionary.gender.includes(text.toLowerCase())) return true
 						else return "Please enter a valid gender."
@@ -32,7 +28,7 @@ module.exports = class UserInfoCommand extends commando.Command {
 				{
 					key: 'orientation',
 					label: 'Orientation',
-					prompt: prompt('What is your sexual orientation?', ffb.dictionary.orientation),
+					prompt: `What is your sexual orientation? (${ffb.dictionary.orientation})`,
 					type: 'string',
 					validate: text => {
 						if (ffb.dictionary.orientation.includes(text.toLowerCase())) return true
@@ -42,7 +38,7 @@ module.exports = class UserInfoCommand extends commando.Command {
                 {
 					key: 'relationship',
 					label: 'Relationship Status',
-					prompt: prompt('What is your relationship status?', ffb.dictionary.relationship),
+					prompt: `What is your relationship status? (${ffb.dictionary.relationship})`,
 					type: 'string',
 					validate: text => {
 						if (ffb.dictionary.relationship.includes(text.toLowerCase())) return true
@@ -66,13 +62,15 @@ module.exports = class UserInfoCommand extends commando.Command {
             relationship: args.relationship.toLowerCase()
         }
 
-        const user = message.member
-        const isUnregistered = message.member.roles.has(ffb.roles.unregistered)
+        const guild = this.client.guilds.first()
+        const member = await guild.fetchMember(message.author)
+
+        const isUnregistered = member.roles.has(ffb.roles.unregistered)
         
         // Once they have filled out their profile they are no longer unregistered.
-        user.removeRole(ffb.roles.unregistered)
+        member.removeRole(ffb.roles.unregistered)
         
-		if (age >= 18 && isUnregistered == true) {
+		if (profile.age >= 18 && isUnregistered == true) {
             // They are at least 18 years old.
 
             // This is the first time they are setting up their profile.
@@ -81,32 +79,34 @@ module.exports = class UserInfoCommand extends commando.Command {
 
             // A moderator will manually have to verify they are 18
             // if they specify they are over 18 when setting up their profile.
-            user.addRole(ffb.roles.over18)
+            member.addRole(ffb.roles.over18)
         }
         
-        if (age < 18) {
+        if (profile.age < 18) {
             // They are considered underage and are blocked from specific commands.
-            logger.warn(`${user.displayName} is underage.`, { user: user.id, age: age })
+            logger.warn(`${member.displayName} is underage.`, { user: member.id, age: profile.age })
         }
         
         // Gender
         for (var x in ffb.roles.gender)
-            await user.removeRole(ffb.roles.gender[x])
-        await user.addRole(ffb.roles.gender[profile.gender])
+            await member.removeRole(ffb.roles.gender[x])
+        await member.addRole(ffb.roles.gender[profile.gender])
 
         // Orientation
 		for (var x in ffb.roles.orientation)
-			await user.removeRole(ffb.roles.orientation[x])
-        await user.addRole(ffb.roles.orientation[profile.orientation])
+			await member.removeRole(ffb.roles.orientation[x])
+        await member.addRole(ffb.roles.orientation[profile.orientation])
 
         // Relationship Status
 		for (var x in ffb.roles.relationship)
-			await user.removeRole(ffb.roles.relationship[x])
-        await user.addRole(ffb.roles.relationship[profile.relationship])
+			await member.removeRole(ffb.roles.relationship[x])
+        await member.addRole(ffb.roles.relationship[profile.relationship])
         
-        logger.info(`${user.displayName} updated their profile as a ${profile.age} year old,  ${profile.relationship} ${profile.orientation} ${profile.gender}.`, { user: user.id, profile: profile })
-        await user.reply('You have updated your profile.')
+        logger.info(`${member.displayName} updated their profile as a ${profile.age} year old, ${profile.relationship} ${profile.orientation} ${profile.gender}.`, { user: member.id, profile: profile })
+        await message.reply('Your profile has been updated.')
 
-		return message.delete()
+        if (isUnregistered) {
+            await message.reply('Welcome to the server! You can also use the commands `.access` and `.location` to gain access to special channels within the server.')
+        }
 	}
 };

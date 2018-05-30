@@ -5,17 +5,17 @@ const commando = require('discord.js-commando');
 module.exports = class UserInfoCommand extends commando.Command {
 	constructor(client) {
 		super(client, {
-			name: 'setaccess',
+			name: 'access',
 			group: 'core',
-			memberName: 'setaccess',
+			memberName: 'access',
 			description: 'Sets your access.',
-			examples: ffb.dictionary.access.forEach(x => `setaccess ${x}`),
+			examples: ffb.dictionary.access.forEach(x => `access ${x}`),
 			guildOnly: true,
 			args: [
 				{
 					key: 'group',
 					label: 'Channel Group',
-					prompt: 'What channel group access do you want to toggle?',
+					prompt: `What channel group access do you want to toggle? (${ffb.dictionary.access})`,
 					type: 'string',
 					validate: text => {
 						if (ffb.dictionary.access.includes(text.toLowerCase())) return true
@@ -45,10 +45,13 @@ module.exports = class UserInfoCommand extends commando.Command {
 
 		logger.info(`${user.displayName} updated access to '${group}' to ${enabled}.`, { user: user.id, group: group, enabled: enabled })
 
-		if (enabled)
+		if (enabled) {
 			await user.addRole(ffb.roles.access[group])
-		else
+			await message.reply(`You now have access to the ${group} channel group.`)
+		} else {
 			await user.removeRole(ffb.roles.access[group])
+			await message.reply(`You no longer have access to the ${group} channel group.`)
+		}
 		
 		return message.delete()
 	}
