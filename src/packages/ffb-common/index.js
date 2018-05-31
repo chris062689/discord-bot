@@ -13,6 +13,7 @@ exports.dictionary = {
         'straight',
         'bisexual',
         'gay',
+        'asexual',
         'pansexual'
     ],
     gender: [

@@ -13,7 +13,7 @@ module.exports = class UserInfoCommand extends commando.Command {
             ownerOnly: true,
 			args: [
 				{
-					key: 'message',
+					key: 'echo',
 					label: 'Message',
 					prompt: `What message do you want to echo?`,
 					type: 'string'
@@ -23,7 +23,8 @@ module.exports = class UserInfoCommand extends commando.Command {
 	}
 
 	async run(message, args) {
-        await message.channel.send(args.messsage)
+		const echo = `${args.echo}`
+        await message.channel.send(echo)
         return message.delete()
 	}
 };

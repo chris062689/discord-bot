@@ -32,9 +32,6 @@ module.exports = class UserInfoCommand extends commando.Command {
 		if (message.member.roles.has(ffb.roles.unregistered))
 			return "Please set up your profile before running commands."
 		
-		if (message.member.roles.has(ffb.roles.over18) == false)
-			return "You are underage and cannot set your location."
-
 		return true
 	}
 
