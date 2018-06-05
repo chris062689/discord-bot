@@ -2,7 +2,8 @@ exports.dictionary = {
     access: [
         'nsfw',
         'hookup',
-        'kink'
+        'kink',
+        'politics'
     ],
     relationship: [
         'single',
