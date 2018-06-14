@@ -3,6 +3,7 @@ exports.dictionary = {
         'nsfw',
         'hookup',
         'kink',
+        'cub',
         'politics'
     ],
     relationship: [
