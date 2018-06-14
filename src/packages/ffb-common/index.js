@@ -9,14 +9,16 @@ exports.dictionary = {
     relationship: [
         'single',
         'closed',
-        'open'
+        'open',
+        'undeclared'
     ],
     orientation: [
         'straight',
         'bisexual',
         'gay',
         'asexual',
-        'pansexual'
+        'pansexual',
+        'undeclared'
     ],
     gender: [
         'male',
